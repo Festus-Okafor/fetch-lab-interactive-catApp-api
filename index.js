@@ -29,22 +29,20 @@ async function initialLoad() {
   //console.log(listsofBreed)
   const breedData = await listsofBreed.json();
 
-  
-
-    for (let breed of breedData) {
+  for (let breed of breedData) {
     const optionEl = document.createElement("option");
-    console.log(breed.name)
+    //console.log(breed.name)
     optionEl.textContent = breed.name;
     //optionEl.value = breed.id;
     optionEl.setAttribute("value", breed.id);
     breedSelect.appendChild(optionEl);
   }
-    // console.log(optionEl)
-    /*
+  // console.log(optionEl)
+  /*
     
     //breed[1]
    */
-  }
+}
 
 initialLoad();
 
@@ -62,11 +60,42 @@ initialLoad();
  * - Each new selection should clear, re-populate, and restart the Carousel.
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
- breedSelect.addEventListener("click", ()=>{
-    if (breedSelect == optionEl.value){
-        fetch()
+
+breedSelect.addEventListener("change",  function () {
+    Carousel.clear()
+  
+  
+   const selectedValue = e.target.value;
+  //console.log(selectedValue)
+    if (selectedValue) {
+
+    fetch("https://api.thecatapi.com/v1/${selectedValue}breeds?api_key=live_8UaLuIIW2nk6xoNn8bv1iLb2XWYf0A0tm765eNkeYDaDErWjzYpm8mNZMsTIKU5l")
+    ///api comment here......
+  .then((response) => response.json())
+   .then((data) =>{
+    console.log(data)
+
+    for(let breed of data){
+         let img = breed.breeds;
+           let src = img;
+          // console.log(src)
+          let pic = breed.id
+          let nameBreed = breed.breeds[0].name;
+
+    
+
+    const carouselEl = document.createElement("element")
+    carouselEl.style.textAlign = "center"
+     Carousel.appendChild(carouselEl)
+    //for p
+    const pEl = document.createElement("element")
+    Carousel.appendChild(pEl)
+    pEl.style.textAlign = "center"
+    carouselEl.textContent = selectedBreedInfo
+     pEl.textContent = selectedBreedInfo
+    }})
     }
-}) 
+});
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
@@ -79,6 +108,25 @@ initialLoad();
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
+/*async function axiosinitialLoad() {
+  const listsofBreed = await axios.get(
+    "https://api.thecatapi.com/v1/breeds?api_key=live_8UaLuIIW2nk6xoNn8bv1iLb2XWYf0A0tm765eNkeYDaDErWjzYpm8mNZMsTIKU5l"
+  );
+  //console.log(listsofBreed)
+  const breedData = await listsofBreed.json();
+
+  for (let breed of breedData) {
+    const optionEl = document.createElement("option");
+    //console.log(breed.name)
+    optionEl.textContent = breed.name;
+    //optionEl.value = breed.id;
+    optionEl.setAttribute("value", breed.id);
+    breedSelect.appendChild(optionEl);
+  }
+ 
+}
+
+axiosinitialLoad();
 /**
  * 5. Add axios interceptors to log the time between request and response to the console.
  * - Hint: you already have access to code that does this!
