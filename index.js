@@ -28,7 +28,7 @@ async function initialLoad() {
   );
   //console.log(listsofBreed)
   const breedData = await listsofBreed.json();
-
+    //console.log(breedData)
   for (let breed of breedData) {
     const optionEl = document.createElement("option");
     //console.log(breed.name)
@@ -61,30 +61,22 @@ initialLoad();
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
 
-breedSelect.addEventListener("change",  function () {
-    Carousel.clear()
+breedSelect.addEventListener("change",  async function (e) {
+   // Carousel.clear()
   
+       
   
    const selectedValue = e.target.value;
-  //console.log(selectedValue)
+   // console.log(selectedValue)
     if (selectedValue) {
-
-    fetch("https://api.thecatapi.com/v1/${selectedValue}breeds?api_key=live_8UaLuIIW2nk6xoNn8bv1iLb2XWYf0A0tm765eNkeYDaDErWjzYpm8mNZMsTIKU5l")
-    ///api comment here......
-  .then((response) => response.json())
-   .then((data) =>{
-    console.log(data)
-
-    for(let breed of data){
-         let img = breed.breeds;
-           let src = img;
-          // console.log(src)
-          let pic = breed.id
-          let nameBreed = breed.breeds[0].name;
-
     
-
-    const carouselEl = document.createElement("element")
+         const breeddData = await  fetch("https://api.thecatapi.com/v1/breeds?api_key=live_8UaLuIIW2nk6xoNn8bv1iLb2XWYf0A0tm765eNkeYDaDErWjzYpm8mNZMsTIKU5l")
+        ///api comment here......
+        console.log(breeddData)
+        const breedInfo = await breeddData.json();
+    
+    
+     const carouselEl = document.createElement("element")
     carouselEl.style.textAlign = "center"
      Carousel.appendChild(carouselEl)
     //for p
@@ -93,9 +85,9 @@ breedSelect.addEventListener("change",  function () {
     pEl.style.textAlign = "center"
     carouselEl.textContent = selectedBreedInfo
      pEl.textContent = selectedBreedInfo
-    }})
     }
-});
+}); 
+
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
@@ -108,7 +100,7 @@ breedSelect.addEventListener("change",  function () {
  *   by setting a default header with your API key so that you do not have to
  *   send it manually with all of your requests! You can also set a default base URL!
  */
-/*async function axiosinitialLoad() {
+async function axiosinitialLoad() {
   const listsofBreed = await axios.get(
     "https://api.thecatapi.com/v1/breeds?api_key=live_8UaLuIIW2nk6xoNn8bv1iLb2XWYf0A0tm765eNkeYDaDErWjzYpm8mNZMsTIKU5l"
   );
